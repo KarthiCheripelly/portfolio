@@ -197,6 +197,55 @@ body {
   position: relative;
 }
 
+.hero-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr minmax(220px, 320px);
+    gap: 2.5rem;
+  }
+}
+
+.hero-copy {
+  min-width: 0;
+}
+
+.hero-photo {
+  margin: 0;
+  justify-self: center;
+  text-align: center;
+  max-width: 320px;
+}
+
+@media (min-width: 900px) {
+  .hero-photo {
+    justify-self: end;
+  }
+}
+
+.hero-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.hero-photo figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
 .eyebrow {
   font-size: 0.8rem;
   font-weight: 600;
