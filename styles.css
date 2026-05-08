@@ -180,7 +180,8 @@ body {
 .hero {
   position: relative;
   padding: clamp(3.5rem, 10vw, 6rem) 0 clamp(4rem, 12vw, 7rem);
-  overflow: hidden;
+  /* overflow: hidden was clipping the portrait at the edges */
+  overflow: visible;
 }
 
 .hero-bg {
@@ -195,54 +196,106 @@ body {
 
 .hero-inner {
   position: relative;
-}
-
-.hero-grid {
-  display: grid;
-  gap: 2rem;
-  align-items: center;
-}
-
-@media (min-width: 900px) {
-  .hero-grid {
-    grid-template-columns: 1fr minmax(220px, 320px);
-    gap: 2.5rem;
-  }
+  z-index: 1;
 }
 
 .hero-copy {
   min-width: 0;
+  max-width: 48rem;
+}
+
+.hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem 2.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.hero-intro {
+  min-width: 0;
+  flex: 1;
 }
 
 .hero-photo {
   margin: 0;
-  justify-self: center;
-  text-align: center;
-  max-width: 320px;
+  flex-shrink: 0;
+  /* Room for full width of the shot; image scales inside frame with object-fit: contain */
+  width: min(100%, clamp(10rem, 38vw, 17.5rem));
+  margin-top: calc(0.8rem * 1.55 + 0.75rem);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: visible;
 }
 
-@media (min-width: 900px) {
-  .hero-photo {
-    justify-self: end;
-  }
-}
-
-.hero-photo img {
-  display: block;
+.hero-carousel {
+  position: relative;
   width: 100%;
+}
+
+.hero-carousel-slides {
+  position: relative;
+  width: 100%;
+  height: min(52vh, 440px);
+  max-height: min(72vh, 600px);
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.hero-slide {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: center 20%;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  object-fit: contain;
+  object-position: center center;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+  pointer-events: none;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 6px 20px rgba(26, 23, 20, 0.1);
   border: 1px solid var(--border);
 }
 
-.hero-photo figcaption {
-  margin-top: 0.6rem;
-  font-size: 0.82rem;
+.hero-slide.is-active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.hero-carousel-dots {
+  display: flex;
+  gap: 7px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.45rem;
+}
+
+.hero-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(26, 23, 20, 0.18);
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.hero-dot.is-active {
+  background: var(--accent);
+  transform: scale(1.15);
+}
+
+.hero-photo-caption {
+  margin-top: 0.45rem;
+  font-size: 0.75rem;
   color: var(--muted);
+  text-align: center;
   line-height: 1.35;
 }
 
